@@ -18,19 +18,21 @@ namespace Demo004.ScopedServiceWorker
         {
             _logger = logger;
             Services = services;
+            
         }
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
+                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
                 await ConsumeService(stoppingToken);               
                 await Task.Delay(1000, stoppingToken);
             }
         }
 
-        private async Task ConsumeService(CancellationToken stoppingToken)
-        {      
+        private Task ConsumeService(CancellationToken stoppingToken)
+        {
             using (var scope = Services.CreateScope())
             {
                 var myService = scope
@@ -42,13 +44,13 @@ namespace Demo004.ScopedServiceWorker
 
                 var x = xnd.Next(10);
                 var y = xnd.Next(10);
-
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                _logger.LogInformation($"A soma de {x} e {y} é {myService.Soma(x, y).Result}");
-                _logger.LogInformation($"A multiplicação de {x} e {y} é {myService.Multiplica(x, y).Result}");
-
-                //Task.CompletedTask.Wait();
+                
+                _logger.LogInformation($"O resultado da soma de {x} + {y} = {myService.Soma(x, y).Result}");
+                _logger.LogInformation($"O resultado da multiplicação de {x} x {y} = {myService.Multiplica(x, y).Result}");
+             
             }
+
+            return Task.CompletedTask;
         }
     }
 }
