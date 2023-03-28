@@ -1,0 +1,11 @@
+﻿{
+  "profiles": {
+    "Demo001.HelloWorker": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
