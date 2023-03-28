@@ -25,17 +25,17 @@ namespace Demo004.ScopedServiceWorker
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await ConsumeService(stoppingToken);               
-                await Task.Delay(1000, stoppingToken);
+                _logger.LogInformation("Worker Calculadora rodando às: {time}", DateTimeOffset.Now);
+                await ConsomeServico(stoppingToken);               
+                await Task.Delay(3000, stoppingToken);
             }
         }
 
-        private Task ConsumeService(CancellationToken stoppingToken)
+        private Task ConsomeServico(CancellationToken stoppingToken)
         {
             using (var scope = Services.CreateScope())
             {
-                var myService = scope
+                var meuService = scope
                     .ServiceProvider
                         .GetRequiredService<ICalculadoraService>();
 
@@ -45,8 +45,8 @@ namespace Demo004.ScopedServiceWorker
                 var x = xnd.Next(10);
                 var y = xnd.Next(10);
                 
-                _logger.LogInformation($"O resultado da soma de {x} + {y} = {myService.Soma(x, y).Result}");
-                _logger.LogInformation($"O resultado da multiplicação de {x} x {y} = {myService.Multiplica(x, y).Result}");
+                _logger.LogInformation($"O resultado da soma de {x} + {y} = {meuService.Soma(x, y).Result}");
+                _logger.LogInformation($"O resultado da multiplicação de {x} x {y} = {meuService.Multiplica(x, y).Result}");
              
             }
 

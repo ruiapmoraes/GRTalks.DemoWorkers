@@ -11,7 +11,6 @@ namespace Demo006.DatabaseWorker
     {
         private readonly IServiceScopeFactory _scopeFactory;
 
-
         private bool _isRunning;
         private Thread _thread;
         private FileSystemWatcher _watcher;
